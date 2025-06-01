@@ -186,55 +186,76 @@
         }
 
         /* Banner - MODIFICAÇÃO PRINCIPAL */
-        .banner {
-            height: calc(100vh - 90px);
-            margin-top: 90px;
-            background: url('https://i.ibb.co/TBM3Mvch/lavacarprimo.jpg') no-repeat center center/cover;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
+/* Banner - MODIFICAÇÃO PRINCIPAL */
+.banner {
+    height: calc(100vh - 90px);
+    min-height: 600px; /* Altura mínima para evitar cortes em telas menores */
+    margin-top: 90px;
+    background: url('https://i.ibb.co/TBM3Mvch/lavacarprimo.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center 32%; /* Ajuste vertical para mostrar o Neumann completo */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    padding-left: 5%; /* Espaçamento para o texto não colar na borda */
+}
 
-        .header.scrolled ~ .banner {
-            margin-top: 80px;
-        }
+.header.scrolled ~ .banner {
+    margin-top: 80px;
+}
 
-        .banner-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-        .banner-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            padding: 0 20px;
-        }
+.banner-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    color: white;
+    text-align: left; /* Alinhamento do texto à esquerda */
+}
 
-        .banner-content h2 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-transform: uppercase;
-            animation: fadeInDown 1s ease;
-        }
+.banner-content h2 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    animation: fadeInDown 1s ease;
+}
 
-        .banner-content p {
-            font-size: 1.4rem;
-            margin-bottom: 30px;
-            color: var(--text-secondary);
-            animation: fadeInUp 1s ease 0.3s forwards;
-            opacity: 0;
-        }
+.banner-content p {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: #f1f1f1;
+    animation: fadeInUp 1s ease 0.3s forwards;
+    opacity: 0;
+}
 
-        .banner-content .btn {
-            animation: fadeIn 1s ease 0.6s forwards;
-            opacity: 0;
-        }
+.banner-content .btn {
+    animation: fadeIn 1s ease 0.6s forwards;
+    opacity: 0;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .banner {
+        background-position: center 30%; /* Ajuste para mobile */
+        padding-left: 20px;
+    }
+    .banner-content h2 {
+        font-size: 2.5rem;
+    }
+    .banner-content p {
+        font-size: 1.1rem;
+    }
+}
 
         /* Serviços */
         .services {
