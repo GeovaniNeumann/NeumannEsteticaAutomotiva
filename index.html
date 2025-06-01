@@ -100,10 +100,10 @@
             z-index: 1000;
             padding: 20px 0;
             transition: all 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.9);
         }
 
         .header.scrolled {
-            background-color: rgba(0, 0, 0, 0.9);
             padding: 15px 0;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
@@ -128,7 +128,6 @@
             display: block;
             letter-spacing: 5px;
             margin-top: 5px;
-            
         }
 
         .nav ul {
@@ -186,13 +185,18 @@
             transition: all 0.3s ease;
         }
 
-        /* Banner */
+        /* Banner - MODIFICAÇÃO PRINCIPAL */
         .banner {
-            height: 100vh;
+            height: calc(100vh - 90px);
+            margin-top: 90px;
             background: url('https://i.ibb.co/TBM3Mvch/lavacarprimo.jpg') no-repeat center center/cover;
             position: relative;
             display: flex;
             align-items: center;
+        }
+
+        .header.scrolled ~ .banner {
+            margin-top: 80px;
         }
 
         .banner-overlay {
@@ -738,6 +742,12 @@
                 flex-direction: column;
                 gap: 30px;
             }
+
+            /* Ajuste para banner em mobile */
+            .banner {
+                height: calc(100vh - 80px);
+                margin-top: 80px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -771,8 +781,8 @@
     </style>
 </head>
 <body>
-    <!-- Cabeçalho -->
-    <header class="header">
+    <!-- Cabeçalho com ID adicionado -->
+    <header class="header" id="main-header">
         <div class="container">
             <div class="logo">
                 <h1>NEUMANN</h1>
@@ -864,7 +874,8 @@
                 <p>A Neumann Estética Automotiva nasceu da paixão por automóveis e da busca pela excelência em cuidados veiculares. Nossa equipe é formada por profissionais especializados que tratam cada veículo como uma obra de arte.</p>
                 <p>Utilizamos apenas produtos premium e técnicas avançadas para garantir resultados que superam expectativas. Seu carro merece o melhor tratamento, e é isso que oferecemos.</p>
                 <div class="about-stats">
-            </div>
+                    <!-- Conteúdo estatísticas aqui -->
+                </div>
             </div>
             <div class="about-image">
                 <img src="https://i.ibb.co/pvBDQGsz/lavacarprimo1.jpg" alt="Sobre a Neumann Estética Automotiva">
@@ -883,53 +894,54 @@
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/HLJt6yXn/Imagem-do-Whats-App-de-2025-06-01-s-17-51-15-8a42c27a.jpg" alt="Serviço 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/j9QCkBc4/Imagem-do-Whats-App-de-2025-06-01-s-17-51-11-6f3f9b0e.jpg" alt="Serviço 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/qMQDJQQw/Imagem-do-Whats-App-de-2025-06-01-s-17-51-14-9dd9068e.jpg" alt="Serviço 1">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/KxHj2wW6/Imagem-do-Whats-App-de-2025-06-01-s-17-51-13-f5800f5f.jpg" alt="Serviço 1">
+                <div class="gallery-item">
+                    <img src="https://i.ibb.co/HLJt6yXn/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-15-8a42c27a.jpg" alt="Serviço 2">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/k6hYt8VD/cruze.jpg" alt="Serviço 2">
+                    <img src="https://i.ibb.co/j9QCkBc4/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-11-6f3f9b0e.jpg" alt="Serviço 3">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/SZz5XsM/honda.jpg" alt="Serviço 3">
+                    <img src="https://i.ibb.co/qMQDJQQw/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-14-9dd9068e.jpg" alt="Serviço 4">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/2Vfb18V/c3.jpg" alt="Serviço 4">
+                    <img src="https://i.ibb.co/KxHj2wW6/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-13-f5800f5f.jpg" alt="Serviço 5">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.ibb.co/kVQ9dMmH/vonix.jpg" alt="Serviço 3">
+                    <img src="https://i.ibb.co/k6hYt8VD/cruze.jpg" alt="Serviço 6">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.ibb.co/SZz5XsM/honda.jpg" alt="Serviço 7">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.ibb.co/2Vfb18V/c3.jpg" alt="Serviço 8">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.ibb.co/kVQ9dMmH/vonix.jpg" alt="Serviço 9">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1005,7 +1017,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu Mobile
@@ -1030,7 +1041,26 @@
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
                 header.classList.toggle('scrolled', window.scrollY > 50);
+                
+                // Ajuste dinâmico do banner quando o header muda de tamanho
+                adjustBannerMargin();
             });
+            
+            // Função para ajustar a margem do banner
+            function adjustBannerMargin() {
+                const header = document.getElementById('main-header');
+                const banner = document.querySelector('.banner');
+                
+                if (header && banner) {
+                    const headerHeight = header.offsetHeight;
+                    banner.style.marginTop = `${headerHeight}px`;
+                    banner.style.height = `calc(100vh - ${headerHeight}px)`;
+                }
+            }
+            
+            // Chamar a função no carregamento e quando a janela for redimensionada
+            window.addEventListener('load', adjustBannerMargin);
+            window.addEventListener('resize', adjustBannerMargin);
             
             // Animação de contadores
             const counters = document.querySelectorAll('.counter');
