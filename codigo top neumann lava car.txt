@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
         /* Reset e Estilos Globais */
         * {
@@ -19,11 +21,12 @@
         }
 
         :root {
-            --primary-color: #000000;
-            --secondary-color: #1a1a1a;
-            --accent-color: #c42626;
-            --text-color: #ffffff;
-            --text-secondary: #cccccc;
+            --primary-color: #0a0a0a;
+            --secondary-color: #1c1c1c;
+            --accent-color: #e63946;
+            --text-color: #f5f5f5;
+            --text-secondary: #b0b0b0;
+            --gradient: linear-gradient(45deg, #e63946, #f48c06);
         }
 
         html {
@@ -38,25 +41,24 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
             text-transform: uppercase;
             position: relative;
-        }
-
-        .section-title span {
-            color: var(--accent-color);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .section-title::after {
@@ -65,30 +67,30 @@
             bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--accent-color);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--text-color);
-            color: var(--primary-color);
+            padding: 14px 35px;
+            background: var(--gradient);
+            color: var(--text-color);
             text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #d1561d;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(7, 8, 63, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+            filter: brightness(1.1);
         }
 
         /* Header */
@@ -100,12 +102,12 @@
             z-index: 1000;
             padding: 20px 0;
             transition: all 0.3s ease;
-            background-color: rgba(0, 0, 0, 0.9);
+            background: rgba(10, 10, 10, 0.95);
         }
 
         .header.scrolled {
             padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
         .header .container {
@@ -115,14 +117,14 @@
         }
 
         .logo h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--text-color);
             letter-spacing: 2px;
         }
 
         .logo span {
-            font-size: 1.0rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--accent-color);
             display: block;
@@ -136,14 +138,14 @@
         }
 
         .nav ul li {
-            margin-left: 30px;
+            margin-left: 35px;
         }
 
         .nav ul li a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             transition: all 0.3s ease;
             position: relative;
@@ -156,7 +158,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--accent-color);
+            background: var(--gradient);
             transition: all 0.3s ease;
         }
 
@@ -172,82 +174,176 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 25px;
-            height: 20px;
+            width: 30px;
+            height: 22px;
             cursor: pointer;
         }
 
         .menu-mobile span {
             display: block;
             width: 100%;
-            height: 2px;
+            height: 3px;
             background-color: var(--text-color);
             transition: all 0.3s ease;
         }
 
-/* Banner - MODIFICAÇÃO PRINCIPAL */
+        /* Banner */
+        .banner {
+            height: 100vh;
+            min-height: 600px;
+            max-height: 900px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-color);
+            z-index: 2;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .banner-content h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        .banner-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0;
+        }
+
+        .banner-content .btn {
+            opacity: 0;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+
+        .banner-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .banner-controls button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--text-color);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .banner-controls button.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
 
         /* Serviços */
         .services {
-            background-color: var(--secondary-color);
+            background: linear-gradient(180deg, var(--secondary-color), var(--primary-color));
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
         }
 
         .service-card {
-            background-color: var(--primary-color);
-            padding: 30px;
-            border-radius: 10px;
+            background: var(--primary-color);
+            padding: 40px;
+            border-radius: 15px;
             text-align: center;
             transition: all 0.5s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
             border-color: var(--accent-color);
         }
 
         .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background-color: rgba(255, 215, 0, 0.1);
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: var(--gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: var(--accent-color);
+            font-size: 2.2rem;
+            color: var(--primary-color);
             transition: all 0.3s ease;
         }
 
         .service-card:hover .service-icon {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            transform: rotate(360deg);
         }
 
         .service-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .service-card p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* Sobre */
         .about .container {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
         }
 
         .about-content {
@@ -261,20 +357,26 @@
 
         .about-image img {
             width: 100%;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
         }
 
         .about-content p {
-            margin-bottom: 20px;
-            line-height: 1.8;
+            margin-bottom: 25px;
+            line-height: 1.9;
             color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
         .about-stats {
             display: flex;
             justify-content: space-between;
-            margin-top: 40px;
+            margin-top: 50px;
         }
 
         .stat {
@@ -282,29 +384,29 @@
         }
 
         .stat span {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--accent-color);
         }
 
         .stat p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-secondary);
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         /* Galeria */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .gallery-item {
             position: relative;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            height: 250px;
+            height: 280px;
         }
 
         .gallery-item img {
@@ -312,6 +414,7 @@
             height: 100%;
             object-fit: cover;
             transition: all 0.5s ease;
+            loading: lazy;
         }
 
         .gallery-overlay {
@@ -320,7 +423,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -330,7 +433,7 @@
 
         .gallery-overlay i {
             color: var(--accent-color);
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         .gallery-item:hover .gallery-overlay {
@@ -338,7 +441,7 @@
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         /* Contato */
@@ -346,8 +449,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 50px;
-            text-align: center;
+            gap: 60px;
         }
 
         .contact-info {
@@ -360,114 +462,113 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 40px;
         }
 
         .contact-buttons-container h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .social-buttons {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
         }
 
         .whatsapp-btn, .instagram-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 15px 25px;
+            gap: 12px;
+            padding: 18px 30px;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .whatsapp-btn {
-            background-color: #25D366;
+            background: #25D366;
             color: white;
         }
 
         .instagram-btn {
-            background: linear-gradient(45deg, #405DE6, #833AB4, #C13584, #E1306C, #FD1D1D);
+            background: var(--gradient);
             color: white;
         }
 
-        .whatsapp-btn:hover {
-            background-color: #128C7E;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .instagram-btn:hover {
-            background: linear-gradient(45deg, #833AB4, #C13584, #E1306C, #FD1D1D);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(131, 58, 180, 0.3);
+        .whatsapp-btn:hover, .instagram-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .info-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .info-item i {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--accent-color);
-            margin-right: 15px;
+            margin-right: 20px;
             margin-top: 5px;
         }
 
         .info-item p {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 1.1rem;
         }
 
         /* Footer */
         .footer {
-            background-color: var(--secondary-color);
-            padding: 60px 0 0;
+            background: var(--secondary-color);
+            padding: 80px 0 0;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 70px;
         }
 
         .footer-logo h3 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             color: var(--text-color);
         }
 
         .footer-logo span {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--accent-color);
             letter-spacing: 3px;
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .footer-logo p {
             color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 0.9rem;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
         .footer-links h4, .footer-social h4 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .footer-links h4::after, .footer-social h4::after {
@@ -475,9 +576,9 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
         }
 
         .footer-links ul {
@@ -485,73 +586,73 @@
         }
 
         .footer-links ul li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .footer-links ul li a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         .footer-links ul li a:hover {
             color: var(--accent-color);
-            padding-left: 5px;
+            padding-left: 8px;
         }
 
         .social-icons {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .social-icons a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
             border-radius: 50%;
             color: var(--text-color);
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
         }
 
         .social-icons a:hover {
-            background-color: var(--accent-color);
+            background: var(--gradient);
             color: var(--primary-color);
             transform: translateY(-5px);
         }
 
         .footer-bottom {
             text-align: center;
-            padding: 20px 0;
+            padding: 25px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-bottom p {
             color: var(--text-secondary);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         /* Botões de Contato Flutuantes */
         .contact-buttons {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
             z-index: 999;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .whatsapp-button, .instagram-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
@@ -559,80 +660,176 @@
         }
 
         .whatsapp-button {
-            background-color: #25D366;
+            background: #25D366;
         }
 
         .instagram-button {
-            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+            background: var(--gradient);
         }
 
         .whatsapp-button:hover, .instagram-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         .contact-buttons img {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: var(--text-color);
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-lightbox:hover {
+            color: var(--accent-color);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            color: var(--accent-color);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            text-align: center;
+            width: 100%;
         }
 
         /* Animações */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .double-bounce1, .double-bounce2 {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--gradient);
+            opacity: 0.6;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .double-bounce2 {
+            animation-delay: -1s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(0); }
+            50% { transform: scale(1); }
         }
 
         /* Responsivo */
         @media (max-width: 992px) {
-            .about .container {
+            .about .container, .contact-content {
                 flex-direction: column;
             }
-            
-            .contact-content {
-                flex-direction: column;
-            }
-            
+
             .contact-info {
-                margin-bottom: 40px;
+                margin-bottom: 50px;
                 text-align: center;
             }
 
             .info-item {
                 justify-content: center;
+            }
+
+            .banner-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .banner-content p {
+                font-size: 1.2rem;
             }
         }
 
@@ -641,98 +838,99 @@
                 position: fixed;
                 top: 0;
                 right: -100%;
-                width: 250px;
+                width: 280px;
                 height: 100vh;
-                background-color: var(--secondary-color);
-                padding: 80px 30px;
+                background: var(--secondary-color);
+                padding: 90px 40px;
                 transition: all 0.5s ease;
             }
-            
+
             .nav.active {
                 right: 0;
             }
-            
+
             .nav ul {
                 flex-direction: column;
             }
-            
+
             .nav ul li {
-                margin: 15px 0;
+                margin: 20px 0;
             }
-            
+
             .menu-mobile {
                 display: flex;
                 z-index: 1001;
             }
-            
+
             .menu-mobile.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
+                transform: rotate(45deg) translate(6px, 6px);
             }
-            
+
             .menu-mobile.active span:nth-child(2) {
                 opacity: 0;
             }
-            
+
             .menu-mobile.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
+                transform: rotate(-45deg) translate(8px, -7px);
             }
-            
-            .banner-content h2 {
-                font-size: 2.5rem;
-            }
-            
-            section {
-                padding: 60px 0;
-            }
-            
+
             .section-title {
+                font-size: 2.2rem;
+            }
+
+            .banner {
+                min-height: 500px;
+            }
+
+            .banner-content h1 {
                 font-size: 2rem;
             }
 
-            .about-stats {
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            /* Ajuste para banner em mobile */
-            .banner {
-                height: calc(100vh - 80px);
-                margin-top: 80px;
+            .banner-content p {
+                font-size: 1rem;
             }
         }
 
         @media (max-width: 576px) {
-            .banner-content h2 {
-                font-size: 2rem;
+            .banner-content h1 {
+                font-size: 1.8rem;
             }
-            
+
             .banner-content p {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
-            
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .contact-buttons {
-                bottom: 20px;
-                right: 20px;
+                bottom: 30px;
+                right: 30px;
             }
-            
+
             .whatsapp-button, .instagram-button {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
             }
-            
+
             .contact-buttons img {
-                width: 25px;
-                height: 25px;
+                width: 30px;
+                height: 30px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Cabeçalho com ID adicionado -->
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
     <header class="header" id="main-header">
         <div class="container">
             <div class="logo">
@@ -757,118 +955,29 @@
     </header>
 
     <!-- Banner Principal -->
-    <!-- Substitua a seção do banner atual por este código -->
-<section id="home" class="banner">
-    <div class="banner-overlay"></div>
-    <div class="banner-content">
-        <h2>ELEVE O STATUS DO SEU VEÍCULO</h2>
-        <p>Cuidados premium para quem exige perfeição</p>
-        <a href="#servicos" class="btn">NOSSOS SERVIÇOS</a>
-    </div>
-</section>
-
-<!-- E adicione este CSS ao seu estilo existente -->
-<style>
-    /* Banner - Versão otimizada para todos os dispositivos */
-    .banner {
-        height: 100vh;
-        min-height: 600px;
-        max-height: 900px;
-        margin-top: 70px;
-        background: url('https://i.ibb.co/TBM3Mvch/lavacarprimo.jpg') no-repeat center center;
-        background-size: cover;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 20px;
-        filter: brightness(0.8);
-    }
-
-    .banner-content {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 1200px;
-        color: rgb(255, 255, 255);
-        text-align: center;
-        padding: 30px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-    }
-
-    .banner-content h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 5px;
-    }
-
-    .banner-content h2 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        line-height: 1.3;
-    }
-
-    .banner-content p {
-        font-size: 1.9rem;
-        margin-bottom: 25px;
-    }
-
-    /* Ajustes para telas maiores */
-    @media (min-width: 768px) {
-        .banner {
-            margin-top: 90px;
-            justify-content: flex-start;
-            padding-left: 5%;
-            background-position: center 32%;
-        }
-        
-        .banner-content {
-            text-align: left;
-            background-color: transparent;
-            padding: 0;
-            max-width: 600px;
-        }
-        
-        .banner-content h1 {
-            font-size: 3.5rem;
-        }
-        
-        .banner-content h2 {
-            font-size: 2.5rem;
-        }
-        
-        .banner-content p {
-            font-size: 1.2rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .banner {
-            min-height: 500px;
-            background-position: center 40%;
-        }
-        
-        .banner-content h1 {
-            font-size: 2rem;
-        }
-        
-        .banner-content h2 {
-            font-size: 1.5rem;
-        }
-        
-        .banner-content p {
-            font-size: 1rem;
-        }
-    }
-</style>
-</style>
+    <section id="home" class="banner">
+        <div class="banner-overlay"></div>
+        <div class="banner-slides">
+            <div class="banner-slide" style="background-image: url('https://i.ibb.co/TBM3Mvch/lavacarprimo.jpg');"></div>
+            <div class="banner-slide" style="background-image: url('https://i.ibb.co/pvBDQGsz/lavacarprimo1.jpg');"></div>
+            <div class="banner-slide" style="background-image: url('https://i.ibb.co/MxN4NRK0/bmw.jpg');"></div>
+        </div>
+        <div class="banner-content">
+            <h1>ELEVE O STATUS DO SEU VEÍCULO</h1>
+            <p>Cuidados premium para quem exige perfeição</p>
+            <a href="#servicos" class="btn">NOSSOS SERVIÇOS</a>
+        </div>
+        <div class="banner-controls">
+            <button class="banner-dot active" data-slide="0"></button>
+            <button class="banner-dot" data-slide="1"></button>
+            <button class="banner-dot" data-slide="2"></button>
+        </div>
+    </section>
 
     <!-- Serviços -->
     <section id="servicos" class="services">
         <div class="container">
-            <h2 class="section-title">NOSSOS <span>SERVIÇOS</span></h2>
+            <h2 class="section-title">NOSSOS SERVIÇOS</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
@@ -920,15 +1029,26 @@
     <section id="sobre" class="about">
         <div class="container">
             <div class="about-content">
-                <h2 class="section-title">SOBRE <span>NÓS</span></h2>
+                <h2 class="section-title">SOBRE NÓS</h2>
                 <p>A Neumann Estética Automotiva nasceu da paixão por automóveis e da busca pela excelência em cuidados veiculares. Nossa equipe é formada por profissionais especializados que tratam cada veículo como uma obra de arte.</p>
                 <p>Utilizamos apenas produtos premium e técnicas avançadas para garantir resultados que superam expectativas. Seu carro merece o melhor tratamento, e é isso que oferecemos.</p>
                 <div class="about-stats">
-                    <!-- Conteúdo estatísticas aqui -->
+                    <div class="stat">
+                        <span class="counter" data-target="500">0</span>
+                        <p>Carros Atendidos</p>
+                    </div>
+                    <div class="stat">
+                        <span class="counter" data-target="10">0</span>
+                        <p>Anos de Experiência</p>
+                    </div>
+                    <div class="stat">
+                        <span class="counter" data-target="1000">0</span>
+                        <p>Clientes Satisfeitos</p>
+                    </div>
                 </div>
             </div>
             <div class="about-image">
-                <img src="https://i.ibb.co/pvBDQGsz/lavacarprimo1.jpg" alt="Sobre a Neumann Estética Automotiva">
+                <img src="https://i.ibb.co/pvBDQGsz/lavacarprimo1.jpg" alt="Sobre a Neumann Estética Automotiva" loading="lazy">
             </div>
         </div>
     </section>
@@ -936,76 +1056,76 @@
     <!-- Galeria -->
     <section id="galeria" class="gallery">
         <div class="container">
-            <h2 class="section-title">NOSSO <span>TRABALHO</span></h2>
+            <h2 class="section-title">NOSSO TRABALHO</h2>
             <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/MxN4NRK0/bmw.jpg" alt="Serviço 1">
+                <div class="gallery-item" data-caption="BMW Polida">
+                    <img src="https://i.ibb.co/MxN4NRK0/bmw.jpg" alt="BMW Polida" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/HLJt6yXn/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-15-8a42c27a.jpg" alt="Serviço 2">
+                <div class="gallery-item" data-caption="Lavagem Premium">
+                    <img src="https://i.ibb.co/HLJt6yXn/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-15-8a42c27a.jpg" alt="Lavagem Premium" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/j9QCkBc4/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-11-6f3f9b0e.jpg" alt="Serviço 3">
+                <div class="gallery-item" data-caption="Hidratação de Couro">
+                    <img src="https://i.ibb.co/j9QCkBc4/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-11-6f3f9b0e.jpg" alt="Hidratação de Couro" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/qMQDJQQw/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-14-9dd9068e.jpg" alt="Serviço 4">
+                <div class="gallery-item" data-caption="Proteção Cerâmica">
+                    <img src="https://i.ibb.co/qMQDJQQw/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-14-9dd9068e.jpg" alt="Proteção Cerâmica" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/HTwKMG2r/Imagem-do-Whats-App-de-2025-06-11-s-20-14-38-37eeb1db.jpg" alt="Serviço 5">
+                <div class="gallery-item" data-caption="Renovação de Faróis">
+                    <img src="https://i.ibb.co/KxHj2wW6/Imagem-do-WhatsApp-de-2025-06-01-s-17-51-13-f5800f5f.jpg" alt="Renovação de Faróis" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/k6hYt8VD/cruze.jpg" alt="Serviço 6">
+                <div class="gallery-item" data-caption="Cruze Detalhado">
+                    <img src="https://i.ibb.co/k6hYt8VD/cruze.jpg" alt="Cruze Detalhado" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/SZz5XsM/honda.jpg" alt="Serviço 7">
+                <div class="gallery-item" data-caption="Honda Polido">
+                    <img src="https://i.ibb.co/SZz5XsM/honda.jpg" alt="Honda Polido" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/2Vfb18V/c3.jpg" alt="Serviço 8">
+                <div class="gallery-item" data-caption="C3 Renovado">
+                    <img src="https://i.ibb.co/2Vfb18V/c3.jpg" alt="C3 Renovado" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/Lzy3z4jq/Imagem-do-Whats-App-de-2025-06-02-s-16-36-57-da948a3d.jpg" alt="Serviço 7">
+                <div class="gallery-item" data-caption="Detalhamento Interno">
+                    <img src="https://i.ibb.co/Lzy3z4jq/Imagem-do-Whats-App-de-2025-06-02-s-16-36-57-da948a3d.jpg" alt="Detalhamento Interno" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/b5sn7VJJ/Imagem-do-Whats-App-de-2025-06-11-s-20-14-38-912c329b.jpg" alt="Serviço 7">
+                <div class="gallery-item" data-caption="Limpeza Premium">
+                    <img src="https://i.ibb.co/Qj1RZ4SX/Imagem-do-Whats-App-de-2025-06-02-s-16-36-57-3662a0fe.jpg" alt="Limpeza Premium" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/Nds3hj4B/Imagem-do-Whats-App-de-2025-06-01-s-19-04-33-ddd05e7e.jpg" alt="Serviço 7">
+                <div class="gallery-item" data-caption="Acabamento Externo">
+                    <img src="https://i.ibb.co/Nds3hj4B/Imagem-do-Whats-App-de-2025-06-01-s-19-04-33-ddd05e7e.jpg" alt="Acabamento Externo" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://i.ibb.co/kVQ9dMmH/vonix.jpg" alt="Serviço 9">
+                <div class="gallery-item" data-caption="Vonix Aplicado">
+                    <img src="https://i.ibb.co/kVQ9dMmH/vonix.jpg" alt="Vonix Aplicado" loading="lazy">
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
@@ -1017,7 +1137,7 @@
     <!-- Contato -->
     <section id="contato" class="contact">
         <div class="container">
-            <h2 class="section-title">ENTRE EM <span>CONTATO</span></h2>
+            <h2 class="section-title">ENTRE EM CONTATO</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="info-item">
@@ -1080,210 +1200,266 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Neumann Estética Automotiva. Todos os direitos reservados.</p>
-                <a href="https://portifoliogeovani.netlify.app/" style="color: #b3b1b1;" target="_blank">© Desenvolvido por Geovani Neumann</a></p>
+                <p>© 2025 Neumann Estética Automotiva. Todos os direitos reservados.</p>
+                <p>Desenvolvido com excelência por Geovani Neumann.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Botões Flutuantes -->
+    <div class="contact-buttons">
+        <a href="https://wa.me/5541999808970" class="whatsapp-button" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        </a>
+        <a href="https://www.instagram.com/neumannesteticaautomotiva/" class="instagram-button" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+        </a>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menu Mobile
             const menuMobile = document.querySelector('.menu-mobile');
             const nav = document.querySelector('.nav');
-            
+
             menuMobile.addEventListener('click', function() {
                 this.classList.toggle('active');
                 nav.classList.toggle('active');
             });
-            
-            // Fechar menu ao clicar em um link
-            const navLinks = document.querySelectorAll('.nav ul li a');
-            navLinks.forEach(link => {
+
+            document.querySelectorAll('.nav ul li a').forEach(link => {
                 link.addEventListener('click', function() {
                     menuMobile.classList.remove('active');
                     nav.classList.remove('active');
                 });
             });
-            
-            // Header scroll
+
+            // Header Scroll
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
                 header.classList.toggle('scrolled', window.scrollY > 50);
-                
-                // Ajuste dinâmico do banner quando o header muda de tamanho
                 adjustBannerMargin();
             });
-            
-            // Função para ajustar a margem do banner
+
+            // Ajuste dinâmico do banner
             function adjustBannerMargin() {
                 const header = document.getElementById('main-header');
                 const banner = document.querySelector('.banner');
-                
                 if (header && banner) {
                     const headerHeight = header.offsetHeight;
                     banner.style.marginTop = `${headerHeight}px`;
                     banner.style.height = `calc(100vh - ${headerHeight}px)`;
                 }
             }
-            
-            // Chamar a função no carregamento e quando a janela for redimensionada
+
             window.addEventListener('load', adjustBannerMargin);
             window.addEventListener('resize', adjustBannerMargin);
-            
-            // Animação de contadores
+
+            // Banner Slideshow
+            const slides = document.querySelectorAll('.banner-slide');
+            const dots = document.querySelectorAll('.banner-dot');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                    dots[i].classList.toggle('active', i === index);
+                });
+
+                const content = document.querySelector('.banner-content');
+                gsap.fromTo(content.children, 
+                    { opacity: 0, y: 50 },
+                    { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
+                );
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentSlide = parseInt(this.getAttribute('data-slide'));
+                    showSlide(currentSlide);
+                });
+            });
+
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+
+            showSlide(currentSlide);
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Animar seção de serviços
+            gsap.utils.toArray('.service-card').forEach(card => {
+                gsap.fromTo(card, 
+                    { opacity: 0, y: 100 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
+
+            // Animar seção sobre
+            gsap.from('.about-content', {
+                opacity: 0,
+                x: -100,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.about',
+                    start: 'top 80%'
+                }
+            });
+
+            gsap.from('.about-image', {
+                opacity: 0,
+                x: 100,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.about',
+                    start: 'top 80%'
+                }
+            });
+
+            // Animar galeria
+            gsap.utils.toArray('.gallery-item').forEach(item => {
+                gsap.fromTo(item, 
+                    { opacity: 0, scale: 0.8 },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'back.out(1.7)',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 90%'
+                        }
+                    }
+                );
+            });
+
+            // Animar contadores
             const counters = document.querySelectorAll('.counter');
             const speed = 200;
-            
+
             function animateCounters() {
                 counters.forEach(counter => {
                     const target = +counter.getAttribute('data-target');
                     const count = +counter.innerText;
                     const increment = target / speed;
-                    
+
                     if (count < target) {
                         counter.innerText = Math.ceil(count + increment);
-                        setTimeout(animateCounters, 1);
+                        setTimeout(animateCounters, 10);
                     } else {
                         counter.innerText = target;
                     }
                 });
             }
-            
-            // Ativar contadores quando a seção estiver visível
+
             const aboutSection = document.querySelector('.about');
-            const options = {
-                threshold: 0.5
-            };
-            
-            const observer = new IntersectionObserver(function(entries, observer) {
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         animateCounters();
                         observer.unobserve(entry.target);
                     }
                 });
-            }, options);
-            
+            }, { threshold: 0.5 });
+
             observer.observe(aboutSection);
-            
+
             // Galeria Lightbox
             const galleryItems = document.querySelectorAll('.gallery-item');
             const lightbox = document.createElement('div');
             lightbox.id = 'lightbox';
             document.body.appendChild(lightbox);
-            
-            galleryItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const img = this.querySelector('img');
-                    const imgSrc = img.getAttribute('src');
-                    
-                    lightbox.innerHTML = `
-                        <div class="lightbox-content">
-                            <img src="${imgSrc}" alt="${img.alt}">
-                            <span class="close-lightbox">&times;</span>
-                        </div>
-                    `;
-                    
-                    lightbox.classList.add('active');
-                    
-                    // Fechar lightbox
-                    const closeBtn = lightbox.querySelector('.close-lightbox');
-                    closeBtn.addEventListener('click', function() {
-                        lightbox.classList.remove('active');
-                    });
+
+            let currentImageIndex = 0;
+
+            function showLightbox(index) {
+                const item = galleryItems[index];
+                const img = item.querySelector('img');
+                const caption = item.getAttribute('data-caption');
+                lightbox.innerHTML = `
+                    <div class="lightbox-content">
+                        <img src="${img.src}" alt="${img.alt}">
+                        <span class="close-lightbox">×</span>
+                        <span class="lightbox-prev"><i class="fas fa-chevron-left"></i></span>
+                        <span class="lightbox-next"><i class="fas fa-chevron-right"></i></span>
+                        <div class="lightbox-caption">${caption}</div>
+                    </div>
+                `;
+                lightbox.classList.add('active');
+
+                gsap.fromTo('.lightbox-content img', 
+                    { scale: 0.8, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
+                );
+
+                const closeBtn = lightbox.querySelector('.close-lightbox');
+                closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+
+                const prevBtn = lightbox.querySelector('.lightbox-prev');
+                const nextBtn = lightbox.querySelector('.lightbox-next');
+
+                prevBtn.addEventListener('click', () => {
+                    currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+                    showLightbox(currentImageIndex);
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+                    showLightbox(currentImageIndex);
+                });
+            }
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    showLightbox(index);
                 });
             });
-            
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
+
+            lightbox.addEventListener('click', e => {
+                if (e.target === lightbox) lightbox.classList.remove('active');
             });
-            
-            // Scroll suave para links internos
+
+            // Scroll suave
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
-                    
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
+                        gsap.to(window, {
+                            scrollTo: targetElement.offsetTop - 80,
+                            duration: 1,
+                            ease: 'power3.inOut'
                         });
                     }
                 });
             });
-            
-            // Preloader
-            const preloader = document.createElement('div');
-            preloader.className = 'preloader';
-            preloader.innerHTML = `
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-            `;
-            document.body.prepend(preloader);
-            
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    preloader.style.opacity = '0';
-                    setTimeout(function() {
-                        preloader.style.display = 'none';
-                    }, 500);
-                }, 500);
-            });
 
-            // Estilos dinâmicos para o lightbox
-            const lightboxStyle = document.createElement('style');
-            lightboxStyle.textContent = `
-                #lightbox {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.9);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 10000;
-                    opacity: 0;
-                    pointer-events: none;
-                    transition: opacity 0.3s ease;
-                }
-                
-                #lightbox.active {
-                    opacity: 1;
-                    pointer-events: all;
-                }
-                
-                .lightbox-content {
-                    position: relative;
-                    max-width: 90%;
-                    max-height: 90%;
-                }
-                
-                .lightbox-content img {
-                    max-width: 100%;
-                    max-height: 80vh;
-                    border-radius: 5px;
-                }
-                
-                .close-lightbox {
-                    position: absolute;
-                    top: -40px;
-                    right: 0;
-                    color: white;
-                    font-size: 2rem;
-                    cursor: pointer;
-                }
-            `;
-            document.head.appendChild(lightboxStyle);
+            // Preloader
+            window.addEventListener('load', () => {
+                gsap.to('.preloader', {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => document.querySelector('.preloader').style.display = 'none'
+                });
+            });
         });
     </script>
 </body>
